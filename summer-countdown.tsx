@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 export default function SummerCountdown() {
   const [timeToVacation, setTimeToVacation] = useState({ days: 0 })
   const [timeToAlbania, setTimeToAlbania] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+  const [timeToCrevette, setTimeToCrevette] = useState({ days: 0 })
 
   useEffect(() => {
     const updateCountdowns = () => {
@@ -33,6 +34,11 @@ export default function SummerCountdown() {
       }
 
       setTimeToVacation({ days: daysToVacation })
+
+      const crevetteDate = new Date("2025-07-06T00:00:00")
+      const diffCrevette = crevetteDate.getTime() - now.getTime()
+      const daysToCrevette = Math.max(0, Math.ceil(diffCrevette / (1000 * 60 * 60 * 24)))
+      setTimeToCrevette({ days: daysToCrevette })
     }
 
     updateCountdowns()
@@ -98,6 +104,22 @@ export default function SummerCountdown() {
           </CardContent>
         </Card>
 
+        {/* Compteur crevette (6 juillet) */}
+        <Card className="w-full max-w-2xl bg-gradient-to-r from-pink-400 to-red-200 border-0 shadow-2xl">
+          <CardContent className="p-8 text-center">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <h2 className="text-3xl font-bold text-white">Championnat du Monde du Décorticage de Crevettes</h2>
+            </div>
+            <p className="text-white/90 text-lg mb-6">6 juillet 2025</p>
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6">
+              <div className="text-7xl font-bold text-white mb-2">{timeToCrevette.days}</div>
+              <div className="text-2xl text-white/90 font-semibold">
+                {timeToCrevette.days === 1 ? "jour restant" : "jours restants"}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Compteur Albanie (9 juillet) */}
         <Card className="w-full max-w-4xl bg-gradient-to-r from-red-500 to-green-500 border-0 shadow-2xl">
           <CardContent className="p-8 text-center">
@@ -131,6 +153,8 @@ export default function SummerCountdown() {
             </div>
           </CardContent>
         </Card>
+
+        
 
         {/* Message motivant */}
         <div className="text-center space-y-2 bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-2xl">
